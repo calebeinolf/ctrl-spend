@@ -1,0 +1,271 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+@import "tailwindcss";
+
+/* Material Design 3 Colors and Custom Classes */
+:root {
+  --md-primary: #006e1c;
+  --md-on-primary: #ffffff;
+  --md-primary-container: #97f592;
+  --md-on-primary-container: #002204;
+  --md-secondary: #52634f;
+  --md-on-secondary: #ffffff;
+  --md-secondary-container: #d5e8cf;
+  --md-on-secondary-container: #101f0f;
+  --md-tertiary: #38656a;
+  --md-on-tertiary: #ffffff;
+  --md-error: #ba1a1a;
+  --md-on-error: #ffffff;
+  --md-error-container: #ffdad6;
+  --md-on-error-container: #410002;
+  --md-background: #fcfdf6;
+  --md-on-background: #191c18;
+  --md-surface: #fcfdf6;
+  --md-on-surface: #191c18;
+  --md-surface-variant: #dee5d8;
+  --md-on-surface-variant: #424940;
+  --md-outline: #727970;
+  --md-outline-variant: #c2c9bc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --md-primary: #7cd977;
+    --md-on-primary: #003909;
+    --md-primary-container: #005313;
+    --md-on-primary-container: #97f592;
+    --md-secondary: #b9ccb4;
+    --md-on-secondary: #243423;
+    --md-secondary-container: #3b4b38;
+    --md-on-secondary-container: #d5e8cf;
+    --md-tertiary: #a0cdd1;
+    --md-on-tertiary: #00373c;
+    --md-error: #ffb4ab;
+    --md-on-error: #690005;
+    --md-error-container: #93000a;
+    --md-on-error-container: #ffdad6;
+    --md-background: #111411;
+    --md-on-background: #e1e3dc;
+    --md-surface: #111411;
+    --md-on-surface: #e1e3dc;
+    --md-surface-variant: #424940;
+    --md-on-surface-variant: #c2c9bc;
+    --md-outline: #8c9389;
+    --md-outline-variant: #424940;
+  }
+}
+
+body {
+  font-family: "Roboto", system-ui, -apple-system, sans-serif;
+  background-color: var(--md-background);
+  color: var(--md-on-background);
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Material Design Button Styles */
+.md-btn {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+.md-btn-filled {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+}
+
+.md-btn-filled:hover {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  filter: brightness(1.1);
+}
+
+.md-btn-outlined {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+  border-width: 1px;
+  background-color: transparent;
+  color: var(--md-primary);
+  border-color: var(--md-outline);
+}
+
+.md-btn-outlined:hover {
+  background-color: var(--md-primary-container);
+}
+
+.md-btn-text {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+  background-color: transparent;
+  color: var(--md-primary);
+}
+
+.md-btn-text:hover {
+  background-color: var(--md-primary-container);
+}
+
+/* Material Design Input Fields */
+.md-input {
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-radius: 0.5rem;
+  border-width: 1px;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+  background-color: var(--md-surface);
+  border-color: var(--md-outline);
+  color: var(--md-on-surface);
+}
+
+.md-input:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  border-color: var(--md-primary);
+  box-shadow: 0 0 0 2px rgba(0, 110, 28, 0.2);
+}
+
+.md-input::placeholder {
+  color: var(--md-on-surface-variant);
+}
+
+/* Material Design Cards */
+.md-card {
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  background-color: var(--md-surface);
+  border: 1px solid var(--md-outline-variant);
+}
+
+.md-surface {
+  background-color: var(--md-surface);
+  color: var(--md-on-surface);
+}
+
+/* Typography */
+.md-headline-large {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  color: var(--md-on-surface);
+}
+
+.md-headline-medium {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 400;
+  color: var(--md-on-surface);
+}
+
+.md-headline-small {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 400;
+  color: var(--md-on-surface);
+}
+
+.md-body-large {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 400;
+  color: var(--md-on-surface);
+}
+
+.md-body-medium {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+  color: var(--md-on-surface);
+}
+
+.md-label-large {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: var(--md-on-surface);
+}
+
+/* Error styles */
+.md-error {
+  color: var(--md-error);
+}
+
+.md-error-text {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  margin-top: 0.25rem;
+  color: var(--md-error);
+}
+
+/* Loading spinner */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.md-spinner {
+  animation: spin 1s linear infinite;
+  border-radius: 9999px;
+  height: 1rem;
+  width: 1rem;
+  border: 2px solid var(--md-outline-variant);
+  border-top-color: var(--md-primary);
+  border-right-color: var(--md-primary);
+}
+
+/* Mobile-first responsive design */
+@media (min-width: 640px) {
+  .md-card {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
