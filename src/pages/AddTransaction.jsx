@@ -278,11 +278,13 @@ const AddTransaction = () => {
   const handleSaveTransaction = async (category) => {
     setLoading(true);
     try {
-      await addTransaction({
+      // Add transaction and wait for Firebase to confirm
+      const transactionId = await addTransaction({
         amount: parseFloat(amount),
         label: category?.name || "Transaction",
         categoryId: category?.id || null,
       });
+
       navigate("/current-budget");
     } catch (error) {
       console.error("Error adding transaction:", error);

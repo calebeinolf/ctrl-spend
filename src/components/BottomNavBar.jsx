@@ -13,7 +13,7 @@ const BottomNavBar = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-2 py-2 z-20 safe-area-pb">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-2  z-20 safe-area-pb">
       <div className="flex justify-between items-center gap-4 mb-2">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -35,7 +35,7 @@ const BottomNavBar = () => {
                 <Icon />
               </div>
 
-              <span className={`text-sm font-medium `}>{item.label}</span>
+              <span className={`text-xs font-medium `}>{item.label}</span>
             </Link>
           );
         })}

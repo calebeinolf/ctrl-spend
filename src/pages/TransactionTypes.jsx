@@ -226,7 +226,7 @@ const TransactionTypes = () => {
             >
               <ArrowLeft size={24} className="text-gray-600" />
             </button>
-            <h1 className="text-xl font-semibold text-gray-900">
+            <h1 className="select-none text-xl font-semibold text-gray-900">
               Transaction Labels
             </h1>
           </div>

@@ -174,6 +174,17 @@ export const AppDataProvider = ({ children }) => {
   const addTransaction = async (transactionData) => {
     if (!user) return;
 
+    // Create optimistic transaction object
+    const optimisticTransaction = {
+      id: `optimistic-${Date.now()}`,
+      ...transactionData,
+      date: { toDate: () => new Date() }, // Mimic Firestore Timestamp for compatibility
+      budgetForMonth: settings.budget.amount,
+    };
+
+    // Add optimistic transaction to UI immediately
+    setTransactions((prev) => [optimisticTransaction, ...prev]);
+
     try {
       const docRef = await addDoc(
         collection(db, `users/${user.uid}/transactions`),
@@ -183,8 +194,19 @@ export const AppDataProvider = ({ children }) => {
           budgetForMonth: settings.budget.amount,
         }
       );
+
+      // Remove optimistic transaction once real one is added
+      // The real-time listener will handle adding the actual transaction
+      setTransactions((prev) =>
+        prev.filter((t) => t.id !== optimisticTransaction.id)
+      );
+
       return docRef.id;
     } catch (error) {
+      // Remove optimistic transaction on error
+      setTransactions((prev) =>
+        prev.filter((t) => t.id !== optimisticTransaction.id)
+      );
       console.error("Error adding transaction:", error);
       throw error;
     }
@@ -301,7 +323,17 @@ export const AppDataProvider = ({ children }) => {
           snapshot.forEach((doc) => {
             transactionData.push({ id: doc.id, ...doc.data() });
           });
-          setTransactions(transactionData);
+
+          // Merge with optimistic transactions, removing any that might be duplicates
+          setTransactions((prev) => {
+            const optimisticTransactions = prev.filter((t) =>
+              t.id.startsWith("optimistic-")
+            );
+            const realTransactions = transactionData;
+
+            // Combine optimistic and real transactions, ensuring no duplicates
+            return [...optimisticTransactions, ...realTransactions];
+          });
         },
         (error) => {
           console.error("Error listening to transactions:", error);

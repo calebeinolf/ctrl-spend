@@ -193,7 +193,9 @@ const TransactionDetails = () => {
           <button onClick={() => navigate(-1)} className="p-2 -ml-2 mr-2">
             <ArrowLeft size={24} className="text-gray-600" />
           </button>
-          <h1 className="text-xl font-semibold text-gray-900">Transaction</h1>
+          <h1 className="select-none text-xl font-semibold text-gray-900">
+            Transaction
+          </h1>
         </div>
       </header>
       {/* Main Content */}

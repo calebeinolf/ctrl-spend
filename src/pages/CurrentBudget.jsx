@@ -79,7 +79,7 @@ const CurrentBudget = () => {
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-6 py-4 z-40">
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-semibold text-gray-900">
+          <h1 className="select-none text-xl font-semibold text-gray-900">
             {currentMonth}
           </h1>
           <button onClick={() => setShowEditModal(true)} className="p-2 -mr-2">

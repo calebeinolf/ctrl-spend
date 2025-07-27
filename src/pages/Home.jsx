@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useAppData } from "../contexts/AppDataContext";
 import TransactionCard from "../components/TransactionCard";
 import { formatCurrency } from "../utils/formatCurrency";
+import ctrlSpendLogo from "../assets/ctrlspend_logo.svg";
 import {
   getBudgetBackgroundClass,
   getBudgetTextClass,
@@ -80,7 +81,7 @@ const Home = () => {
         {/* Logo */}
         <div className="flex justify-center mt-6">
           <img
-            src="/src/assets/ctrlspend_logo.svg"
+            src={ctrlSpendLogo}
             alt="Ctrl Spend Logo"
             className="h-10 w-auto"
           />
