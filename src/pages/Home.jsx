@@ -224,12 +224,6 @@ const Home = () => {
             ) : (
               <div className="bg-white p-8 rounded-4xl text-center border border-gray-100">
                 <p className="text-gray-500 mb-4">No transactions yet</p>
-                <button
-                  onClick={() => navigate("/add-transaction")}
-                  className="bg-lime-600 text-white px-6 py-2 rounded-full font-medium hover:bg-lime-700 transition-colors"
-                >
-                  Add your first transaction
-                </button>
               </div>
             )}
             <div
