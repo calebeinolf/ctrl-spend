@@ -32,10 +32,16 @@ const Settings = () => {
     settings.warning.yellowType || "percentage"
   );
   const [yellowWarningValue, setYellowWarningValue] = useState(
-    (settings.warning.yellowValue || 40).toString()
+    (isNaN(Number(settings.warning.yellowValue))
+      ? 40
+      : settings.warning.yellowValue
+    ).toString()
   );
   const [redWarningValue, setRedWarningValue] = useState(
-    (settings.warning.redValue || 20).toString()
+    (isNaN(Number(settings.warning.redValue))
+      ? 20
+      : settings.warning.redValue
+    ).toString()
   );
   const [saving, setSaving] = useState(false);
 

@@ -43,7 +43,7 @@ const PublicRoute = ({ children }) => {
     return <LoadingScreen />;
   }
 
-  return user ? <Navigate to="/" replace /> : children;
+  return user ? <Navigate to="/home" replace /> : children;
 };
 
 const AppContent = () => {
@@ -69,15 +69,15 @@ const AppContent = () => {
             path="/"
             element={
               <ProtectedRoute>
-                <Home />
+                <AddTransaction />
               </ProtectedRoute>
             }
           />
           <Route
-            path="/add-transaction"
+            path="/home"
             element={
               <ProtectedRoute>
-                <AddTransaction />
+                <Home />
               </ProtectedRoute>
             }
           />
@@ -166,8 +166,8 @@ const AppContent = () => {
         </Routes>
       </Suspense>
 
-      {/* Show bottom nav only when user is authenticated and not on add-transaction page */}
-      {user && location.pathname !== "/add-transaction" && <BottomNavBar />}
+      {/* Show bottom nav when user is authenticated */}
+      {user && <BottomNavBar />}
     </div>
   );
 };

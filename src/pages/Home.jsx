@@ -200,7 +200,7 @@ const Home = () => {
 
             {/* New Transaction Button */}
             <button
-              onClick={() => navigate("/add-transaction")}
+              onClick={() => navigate("/")}
               className="col-span-1 h-full bg-gray-100 rounded-4xl font-medium text-lg flex flex-col items-center justify-center gap-2 hover:bg-gray-200 transition-colors p-4"
             >
               <PlusCircle size={24} />

@@ -156,7 +156,7 @@ const CurrentBudget = () => {
               <div className="bg-white p-8 rounded-2xl text-center">
                 <p className="text-gray-500 mb-4">No transactions this month</p>
                 <button
-                  onClick={() => navigate("/add-transaction")}
+                  onClick={() => navigate("/")}
                   className="bg-lime-600 text-white px-6 py-2 rounded-full font-medium"
                 >
                   Add your first transaction

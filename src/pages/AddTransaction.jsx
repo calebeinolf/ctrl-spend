@@ -243,7 +243,7 @@ const AddTransaction = () => {
         label: customLabel,
         categoryId: null,
       });
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       console.error("Error adding custom transaction:", error);
     }
@@ -313,7 +313,10 @@ const AddTransaction = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div
+      className="min-h-screen bg-white flex flex-col"
+      style={{ paddingBottom: "var(--bottom-nav-height, 66px)" }}
+    >
       {/* Header */}
       <div
         className={
@@ -479,9 +482,14 @@ const AddTransaction = () => {
           </div>
 
           {/* Categories - starts at halfway point and continues down */}
-          <div className="px-6 pb-6">
+          <div className="px-4 pb-6">
             {/* Custom Label */}
-            <div className="space-y-3 pb-20">
+            <div
+              className="space-y-3"
+              style={{
+                paddingBottom: "calc(var(--bottom-nav-height, 66px) + 120px)",
+              }}
+            >
               <div
                 onClick={handleCustomInputClick}
                 className={`w-full flex items-center gap-4 px-6 p-4 border rounded-full cursor-text ${
@@ -547,7 +555,10 @@ const AddTransaction = () => {
 
       {/* Bottom Action Buttons */}
       {step === 2 && (
-        <div className="fixed flex items-center gap-3 left-0 right-0 bottom-0 p-6 z-20 font-medium">
+        <div
+          className="fixed flex items-center gap-3 left-0 right-0 p-4 z-20 font-medium"
+          style={{ bottom: "var(--bottom-nav-height, 66px)" }}
+        >
           <button
             onClick={() => setShowAddLabelModal(true)}
             disabled={loading}
@@ -581,7 +592,10 @@ const AddTransaction = () => {
       {step === 2 && (
         <div>
           {/* <div className="fixed left-0 right-0 bottom-24 h-20 bg-gradient-to-t from-white to-transparent pointer-events-none z-10 translate-y-1"></div> */}
-          <div className="fixed left-0 right-0 bottom-0 h-24 bg-white pointer-events-none z-10"></div>
+          <div
+            className="fixed left-0 right-0 h-24 bg-white pointer-events-none z-10 translate-y-[1px]"
+            style={{ bottom: "var(--bottom-nav-height, 65px)" }}
+          ></div>
         </div>
       )}
 

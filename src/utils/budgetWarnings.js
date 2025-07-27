@@ -34,16 +34,28 @@ export const getBudgetWarningState = (
   if (budgetLeft <= 0) return WARNING_STATES.RED;
   if (totalBudget <= 0) return WARNING_STATES.GREEN;
 
+  // Provide defaults and validate warning settings
+  const safeWarningSettings = {
+    yellowType: warningSettings?.yellowType || "percentage",
+    yellowValue: isNaN(Number(warningSettings?.yellowValue))
+      ? 40
+      : Number(warningSettings.yellowValue),
+    redType: warningSettings?.redType || "percentage",
+    redValue: isNaN(Number(warningSettings?.redValue))
+      ? 20
+      : Number(warningSettings.redValue),
+  };
+
   // Calculate thresholds
   const yellowThreshold =
-    warningSettings.yellowType === "percentage"
-      ? (warningSettings.yellowValue / 100) * totalBudget
-      : warningSettings.yellowValue;
+    safeWarningSettings.yellowType === "percentage"
+      ? (safeWarningSettings.yellowValue / 100) * totalBudget
+      : safeWarningSettings.yellowValue;
 
   const redThreshold =
-    warningSettings.redType === "percentage"
-      ? (warningSettings.redValue / 100) * totalBudget
-      : warningSettings.redValue;
+    safeWarningSettings.redType === "percentage"
+      ? (safeWarningSettings.redValue / 100) * totalBudget
+      : safeWarningSettings.redValue;
 
   // Determine warning state
   if (budgetLeft <= redThreshold) {
@@ -260,15 +272,27 @@ export const getWarningDescriptions = (warningSettings) => {
     }).format(value);
   };
 
+  // Provide default values and validate inputs
+  const safeWarningSettings = {
+    yellowType: warningSettings?.yellowType || "percentage",
+    yellowValue: isNaN(Number(warningSettings?.yellowValue))
+      ? 40
+      : Number(warningSettings.yellowValue),
+    redType: warningSettings?.redType || "percentage",
+    redValue: isNaN(Number(warningSettings?.redValue))
+      ? 20
+      : Number(warningSettings.redValue),
+  };
+
   const yellowDescription =
-    warningSettings.yellowType === "percentage"
-      ? `${warningSettings.yellowValue}% left`
-      : `${formatCurrency(warningSettings.yellowValue)} left`;
+    safeWarningSettings.yellowType === "percentage"
+      ? `${safeWarningSettings.yellowValue}% left`
+      : `${formatCurrency(safeWarningSettings.yellowValue)} left`;
 
   const redDescription =
-    warningSettings.redType === "percentage"
-      ? `${warningSettings.redValue}% left`
-      : `${formatCurrency(warningSettings.redValue)} left`;
+    safeWarningSettings.redType === "percentage"
+      ? `${safeWarningSettings.redValue}% left`
+      : `${formatCurrency(safeWarningSettings.redValue)} left`;
 
   return {
     yellow: `Yellow when ${yellowDescription}`,

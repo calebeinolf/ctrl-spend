@@ -110,7 +110,18 @@ export const AppDataProvider = ({ children }) => {
       }
 
       if (warningDoc.exists()) {
-        newSettings.warning = warningDoc.data();
+        const warningData = warningDoc.data();
+        // Validate and set defaults for warning settings to prevent NaN values
+        newSettings.warning = {
+          yellowType: warningData.yellowType || "percentage",
+          yellowValue: isNaN(Number(warningData.yellowValue))
+            ? 40
+            : Number(warningData.yellowValue),
+          redType: warningData.redType || "percentage",
+          redValue: isNaN(Number(warningData.redValue))
+            ? 20
+            : Number(warningData.redValue),
+        };
       }
 
       if (typesDoc.exists()) {

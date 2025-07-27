@@ -27,6 +27,10 @@ const AddTransactionLabelModal = ({
   const handleAdd = () => {
     if (!newTypeName.trim()) return;
     onAdd(newTypeName.trim(), selectedColor);
+    setTimeout(() => {
+      setNewTypeName("");
+      setSelectedColor("#ef4444");
+    }, 300);
   };
 
   const handleCancel = () => {
