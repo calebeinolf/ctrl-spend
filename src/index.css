@@ -1,11 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap");
 @import "tailwindcss";
 
 /* Material Design 3 Colors and Custom Classes */
 :root {
-  --md-primary: #006e1c;
+  --md-primary: #1b5e20;
   --md-on-primary: #ffffff;
-  --md-primary-container: #97f592;
+  --md-primary-container: #a5d6a7;
   --md-on-primary-container: #002204;
   --md-secondary: #52634f;
   --md-on-secondary: #ffffff;
@@ -17,14 +17,16 @@
   --md-on-error: #ffffff;
   --md-error-container: #ffdad6;
   --md-on-error-container: #410002;
-  --md-background: #fcfdf6;
+  --md-background: #fafafa;
   --md-on-background: #191c18;
-  --md-surface: #fcfdf6;
+  --md-surface: #ffffff;
   --md-on-surface: #191c18;
-  --md-surface-variant: #dee5d8;
+  --md-surface-variant: #f5f5f5;
   --md-on-surface-variant: #424940;
   --md-outline: #727970;
-  --md-outline-variant: #c2c9bc;
+  --md-outline-variant: #e0e0e0;
+  --md-accent: #4caf50;
+  --md-accent-variant: #388e3c;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -55,7 +57,7 @@
 }
 
 body {
-  font-family: "Roboto", system-ui, -apple-system, sans-serif;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
   background-color: var(--md-background);
   color: var(--md-on-background);
   margin: 0;
@@ -268,4 +270,123 @@ button {
     max-width: 400px;
     margin: 0 auto;
   }
+}
+
+/* Safe area support for mobile devices */
+.safe-area-pb {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Prevent pull-to-refresh on mobile */
+body {
+  overscroll-behavior-y: contain;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mobile viewport fixes */
+@media screen and (max-width: 768px) {
+  body {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Prevent zoom on input focus */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--md-outline-variant);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--md-outline);
+}
+
+/* Hide scrollbar utility class */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+/* Mobile-first responsive utilities */
+.safe-area-pb {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.safe-area-pt {
+  padding-top: env(safe-area-inset-top, 0);
+}
+
+/* Prevent horizontal scroll on mobile */
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Touch targets should be at least 44px */
+button,
+[role="button"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Improve text readability on mobile */
+@media (max-width: 768px) {
+  body {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+}
+
+/* Drag and Drop styles */
+.dnd-item-dragging {
+  opacity: 0.5;
+}
+
+.dnd-overlay {
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* Improved touch interaction for drag handles */
+.drag-handle {
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Allow scrolling on sortable items, but prevent on drag handles */
+.sortable-item {
+  touch-action: pan-y pan-x;
+}
+
+/* Ensure smooth scrolling during drag operations */
+.sortable-list {
+  scroll-behavior: smooth;
+  touch-action: pan-y;
 }
