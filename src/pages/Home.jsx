@@ -75,8 +75,16 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-white pb-20">
       {/* Header */}
-      <h1 className="pt-[15vh] text-3xl font-medium text-gray-900 text-center">
-        Budget Buddy
+      <h1 className="pt-[8vh] text-3xl font-medium text-gray-900 text-center">
+        Welcome
+        {/* Logo */}
+        <div className="flex justify-center mt-6">
+          <img
+            src="/src/assets/ctrlspend_logo.svg"
+            alt="Ctrl Spend Logo"
+            className="h-10 w-auto"
+          />
+        </div>
       </h1>
 
       {/* Main Content */}

@@ -88,7 +88,7 @@ const Signup = () => {
             className="md-body-large"
             style={{ color: "var(--md-on-surface-variant)" }}
           >
-            Join Budget Buddy and take control of your finances
+            Join Ctrl+Spend and take control of your finances
           </p>
         </div>
 

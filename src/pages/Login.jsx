@@ -63,7 +63,7 @@ const Login = () => {
             className="md-body-large"
             style={{ color: "var(--md-on-surface-variant)" }}
           >
-            Sign in to your Budget Buddy account
+            Sign in to your Ctrl+Spend account
           </p>
         </div>
 
