@@ -1,3 +1,6 @@
+
+<img width="203" height="58" alt="ctrlspend_logo" src="https://github.com/user-attachments/assets/7b52ceb3-b460-485b-bea4-d5e63624a875" />
+
 # I want a truly simple budgeting app—
 
 is that too much to ask for? Apparently. All the apps I tried were just TOO good. All I wanted was to set a budget and track my spending. No complicated categories or telling it my net worth, just a hard line on how much I can spend. Preferably with some super simple UX and UI.
