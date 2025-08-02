@@ -49,7 +49,7 @@ const TransactionTypeModal = ({
     }
   }, [isOpen]);
 
-  // Handle bidirectional scroll expansion/collapse
+  // Handle scroll expansion (one-way only)
   const handleScroll = (e) => {
     const scrollTop = e.target.scrollTop;
     const scrollHeight = e.target.scrollHeight;
@@ -62,7 +62,7 @@ const TransactionTypeModal = ({
       return;
     }
 
-    // Scrolling down: expand from 60vh to 90vh
+    // Scrolling down: expand from 60vh to 90vh (one-way only)
     if (
       scrollDelta > 0 &&
       scrollTop > 20 &&
@@ -70,26 +70,7 @@ const TransactionTypeModal = ({
       scrollHeight > clientHeight
     ) {
       setModalHeight("90vh");
-      setLastScrollTop(0); // Reset to prevent immediate collapse
-      return;
-    }
-
-    // Scrolling up when at the top: collapse or close
-    if (scrollDelta < 0 && scrollTop <= 5) {
-      if (modalHeight === "90vh") {
-        // Collapse from full to half
-        setModalHeight("60vh");
-        setTimeout(() => {
-          if (scrollContainerRef.current) {
-            scrollContainerRef.current.scrollTop = 0;
-            setLastScrollTop(0);
-          }
-        }, 50);
-      } else if (modalHeight === "60vh") {
-        // Close modal if already at half size
-        setIsVisible(false);
-        setTimeout(() => onClose(), 150);
-      }
+      setLastScrollTop(0); // Reset to prevent any issues
       return;
     }
 
@@ -123,7 +104,7 @@ const TransactionTypeModal = ({
         setTimeout(() => onClose(), 150);
       }
     }
-    // If dragging up significantly
+    // If dragging up significantly from 60vh, expand to 90vh
     else if (deltaY < -50 && modalHeight === "60vh") {
       setModalHeight("90vh");
     }
@@ -195,6 +176,13 @@ const TransactionTypeModal = ({
       className={`fixed inset-0 bg-black/50 flex items-end justify-center z-50 transition-opacity duration-300 ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
+      onClick={(e) => {
+        // Only close if clicking on the backdrop (not the modal itself)
+        if (e.target === e.currentTarget) {
+          setIsVisible(false);
+          setTimeout(() => onClose(), 150);
+        }
+      }}
     >
       <div
         ref={modalRef}
@@ -214,8 +202,6 @@ const TransactionTypeModal = ({
           onTouchMove={(e) => handleMove(e.touches[0].clientY)}
           onTouchEnd={handleEnd}
         >
-          {/* Visual indicator for drag/scroll */}
-          <div className="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-4"></div>
           <div className="text-2xl text-center text-gray-600 font-medium">
             What's it for?
           </div>
@@ -292,10 +278,10 @@ const TransactionTypeModal = ({
             <button
               onClick={onAddNew}
               disabled={saving}
-              className="w-full flex items-center gap-4 px-6 p-4 border-2 border-dashed border-gray-300 rounded-full text-left transition-all hover:border-lime-500 hover:bg-lime-50"
+              className="w-full flex items-center gap-3 px-6 p-4 font-medium rounded-full text-left transition-all bg-lime-100 hover:bg-lime-200"
             >
-              <Plus size={20} className="text-gray-400 flex-shrink-0" />
-              <span className="text-lg text-gray-600">Add new label</span>
+              <Plus size={24} className="text-lime-700 flex-shrink-0" />
+              <span className="text-lg text-lime-700">Add new label</span>
             </button>
           </div>
         </div>

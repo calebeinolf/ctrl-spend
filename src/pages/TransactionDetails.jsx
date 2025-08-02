@@ -288,7 +288,7 @@ const TransactionDetails = () => {
 
         {/* Delete Button */}
         <div
-          className="fixed left-0 right-0 p-4 px-6 z-40"
+          className="fixed left-0 right-0 p-4 z-40"
           style={{ bottom: "var(--bottom-nav-height, 66px)" }}
         >
           <button
