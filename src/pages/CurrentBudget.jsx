@@ -70,7 +70,7 @@ const CurrentBudget = () => {
 
   const getProgressPercentage = () => {
     return parseFloat(
-      Math.min((currentSpending / settings.budget.amount) * 100, 100).toFixed(0)
+      ((currentSpending / settings.budget.amount) * 100).toFixed(0)
     );
   };
 
@@ -107,7 +107,9 @@ const CurrentBudget = () => {
                 warningState
               )}`}
             >
-              {formatCurrency(budgetLeft)} left
+              {budgetLeft >= 0
+                ? `${formatCurrency(budgetLeft)} left`
+                : `${formatCurrency(Math.abs(budgetLeft))} over`}
             </h1>
             <h2 className="text-gray-400 font-medium text-2xl">
               / {formatCurrency(settings.budget.amount)}

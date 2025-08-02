@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Trash2, Calendar, Clock } from "lucide-react";
+import { ArrowLeft, Trash2, Calendar, Clock, Pencil } from "lucide-react";
 import { useAppData } from "../contexts/AppDataContext";
 import { formatCurrency } from "../utils/formatCurrency";
 import TransactionTypeModal from "../components/TransactionTypeModal";
@@ -18,8 +18,6 @@ const TransactionDetails = () => {
   } = useAppData();
   const [transaction, setTransaction] = useState(null);
   const [editingAmount, setEditingAmount] = useState(false);
-  const [editingDate, setEditingDate] = useState(false);
-  const [editingTime, setEditingTime] = useState(false);
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -118,35 +116,37 @@ const TransactionDetails = () => {
     setSaving(false);
   };
 
-  const handleSaveDate = async () => {
-    if (!date) return;
+  const handleSaveDate = async (newDate) => {
+    if (!newDate) return;
 
     setSaving(true);
     try {
       const currentDate = transaction.date?.toDate() || new Date();
-      const newDate = new Date(date);
-      newDate.setHours(currentDate.getHours(), currentDate.getMinutes());
+      // Parse the date as local time to avoid timezone issues
+      const [year, month, day] = newDate.split("-").map(Number);
+      const updatedDate = new Date(year, month - 1, day); // month is 0-indexed
+      updatedDate.setHours(currentDate.getHours(), currentDate.getMinutes());
 
-      await updateTransaction(id, { date: newDate });
-      setEditingDate(false);
+      await updateTransaction(id, { date: updatedDate });
+      setDate(newDate);
     } catch (error) {
       console.error("Error updating date:", error);
     }
     setSaving(false);
   };
 
-  const handleSaveTime = async () => {
-    if (!time) return;
+  const handleSaveTime = async (newTime) => {
+    if (!newTime) return;
 
     setSaving(true);
     try {
       const currentDate = transaction.date?.toDate() || new Date();
-      const [hours, minutes] = time.split(":").map(Number);
-      const newDate = new Date(currentDate);
-      newDate.setHours(hours, minutes);
+      const [hours, minutes] = newTime.split(":").map(Number);
+      const updatedDate = new Date(currentDate);
+      updatedDate.setHours(hours, minutes);
 
-      await updateTransaction(id, { date: newDate });
-      setEditingTime(false);
+      await updateTransaction(id, { date: updatedDate });
+      setTime(newTime);
     } catch (error) {
       console.error("Error updating time:", error);
     }
@@ -254,101 +254,43 @@ const TransactionDetails = () => {
               className={`inline-flex items-center px-6 py-3 font-medium rounded-full text-lg transition-colors ${
                 category
                   ? "text-white hover:opacity-90"
-                  : "bg-blue-100 text-blue-800 hover:bg-blue-200"
+                  : transaction.label
+                  ? "bg-blue-100 text-blue-800 hover:bg-blue-200"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
               }`}
               style={category ? { backgroundColor: category.color } : {}}
             >
-              {transaction.label}
+              {!transaction.label && (
+                <Pencil size={16} className="mr-2 text-gray-500" />
+              )}
+              {transaction.label || "No label"}
             </button>
           </div>
 
           {/* Date and Time */}
-          <div className="flex justify-center gap-8">
-            {editingDate ? (
-              <div className="space-y-3">
-                <input
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-lime-500 focus:border-transparent"
-                  autoFocus
-                />
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => {
-                      setDate(transactionDate.toISOString().split("T")[0]);
-                      setEditingDate(false);
-                    }}
-                    className="flex-1 px-3 py-1 text-sm text-gray-700 border border-gray-300 rounded-lg"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handleSaveDate}
-                    disabled={saving || !date}
-                    className="flex-1 px-3 py-1 text-sm bg-lime-600 text-white rounded-lg disabled:bg-gray-300"
-                  >
-                    {saving ? "Saving..." : "Save"}
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <button
-                onClick={() => setEditingDate(true)}
-                className="px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-xl hover:bg-gray-200 transition-colors"
-              >
-                {transactionDate.toLocaleDateString("en-US", {
-                  month: "numeric",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-              </button>
-            )}
-
-            {editingTime ? (
-              <div className="space-y-3">
-                <input
-                  type="time"
-                  value={time}
-                  onChange={(e) => setTime(e.target.value)}
-                  className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-lime-500 focus:border-transparent"
-                  autoFocus
-                />
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => {
-                      setTime(transactionDate.toTimeString().slice(0, 5));
-                      setEditingTime(false);
-                    }}
-                    className="flex-1 px-3 py-1 text-sm text-gray-700 border border-gray-300 rounded-lg"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handleSaveTime}
-                    disabled={saving || !time}
-                    className="flex-1 px-3 py-1 text-sm bg-lime-600 text-white rounded-lg disabled:bg-gray-300"
-                  >
-                    {saving ? "Saving..." : "Save"}
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <button
-                onClick={() => setEditingTime(true)}
-                className="px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-xl hover:bg-gray-200 transition-colors"
-              >
-                {transactionDate.toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </button>
-            )}
+          <div className="flex justify-center gap-4">
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              onBlur={(e) => handleSaveDate(e.target.value)}
+              className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-lime-500 focus:border-transparent"
+            />
+            <input
+              type="time"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              onBlur={(e) => handleSaveTime(e.target.value)}
+              className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-lime-500 focus:border-transparent"
+            />
           </div>
         </div>
 
         {/* Delete Button */}
-        <div className="fixed bottom-23 left-0 right-0 p-4 px-6 z-40">
+        <div
+          className="fixed left-0 right-0 p-4 px-6 z-40"
+          style={{ bottom: "var(--bottom-nav-height, 66px)" }}
+        >
           <button
             onClick={() => setShowDeleteConfirm(true)}
             className="w-full px-6 py-4 bg-red-100 text-red-600 text-lg font-medium rounded-full hover:bg-red-200 transition-colors"
@@ -397,6 +339,7 @@ const TransactionDetails = () => {
         onAddNew={() => setShowAddLabelModal(true)}
         transactionTypes={settings?.transactionTypes?.types || []}
         currentCategoryId={transaction?.categoryId}
+        currentLabel={transaction?.label || ""}
         saving={saving}
       />
 

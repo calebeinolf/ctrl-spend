@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  Home,
   ArrowLeft,
   Delete,
   Check,
@@ -578,7 +577,7 @@ const AddTransaction = () => {
             </button>
           ) : (
             <button
-              onClick={() => handleCustomTransaction("Transaction")}
+              onClick={() => handleCustomTransaction("")}
               disabled={loading}
               className="flex-1 p-4 bg-lime-100 rounded-full text-xl text-lime-700 hover:bg-lime-200 transition-colors"
             >

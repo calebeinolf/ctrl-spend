@@ -318,6 +318,23 @@ export const AppDataProvider = ({ children }) => {
       .reduce((total, transaction) => total + transaction.amount, 0);
   };
 
+  // Get budget for a specific month (from transactions made in that month)
+  const getMonthBudget = (year, month) => {
+    const monthTransactions = transactions.filter((transaction) => {
+      const transactionDate = transaction.date?.toDate();
+      return (
+        transactionDate &&
+        transactionDate.getMonth() === month &&
+        transactionDate.getFullYear() === year
+      );
+    });
+
+    // Return the budget from the first transaction of that month, or current budget if no transactions
+    return monthTransactions.length > 0
+      ? monthTransactions[0].budgetForMonth || settings.budget.amount
+      : settings.budget.amount;
+  };
+
   // Effect to handle user changes
   useEffect(() => {
     if (user) {
@@ -420,6 +437,7 @@ export const AppDataProvider = ({ children }) => {
     updateTransactionTypes,
     getCurrentMonthSpending,
     getMonthSpending,
+    getMonthBudget,
     shouldShowWarning,
     getCurrentBudgetWarningState,
   };

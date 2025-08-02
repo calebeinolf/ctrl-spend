@@ -26,6 +26,7 @@ const Home = () => {
     settings,
     getCurrentMonthSpending,
     getMonthSpending,
+    getMonthBudget,
     shouldShowWarning,
     getCurrentBudgetWarningState,
     loading,
@@ -55,9 +56,15 @@ const Home = () => {
     return { year: lastMonthYear, month: lastMonth };
   };
 
+  const getLastMonthBudget = () => {
+    const { year, month } = getLastMonthData();
+    return getMonthBudget(year, month);
+  };
+
   const recentTransactions = transactions.slice(0, 4);
   const currentSpending = getCurrentMonthSpending();
   const lastMonthSpending = getLastMonthSpending();
+  const lastMonthBudget = getLastMonthBudget();
   const budgetLeft = settings.budget.amount - currentSpending;
   const showWarning = shouldShowWarning();
   const warningState = getCurrentBudgetWarningState();
@@ -168,7 +175,7 @@ const Home = () => {
             <div
               className={`col-span-2 p-6 rounded-4xl cursor-pointer hover:opacity-80 transition-opacity ${getOverBudgetBackgroundClass(
                 lastMonthSpending,
-                settings.budget.amount
+                lastMonthBudget
               )} `}
               onClick={() => {
                 const { year, month } = getLastMonthData();
@@ -180,18 +187,18 @@ const Home = () => {
                 <div
                   className={`text-2xl ${getOverBudgetTextDarkClass(
                     lastMonthSpending,
-                    settings.budget.amount
+                    lastMonthBudget
                   )}`}
                 >
                   {formatCurrency(lastMonthSpending)}
                   <span
                     className={getOverBudgetAccentClass(
                       lastMonthSpending,
-                      settings.budget.amount
+                      lastMonthBudget
                     )}
                   >
                     {" "}
-                    / {formatCurrency(settings.budget.amount)}
+                    / {formatCurrency(lastMonthBudget)}
                   </span>
                 </div>
                 <p>spent</p>

@@ -195,7 +195,7 @@ const MonthBudgetHistory = () => {
               budget
             )} `}
           >
-            <p className="">{isOverBudget ? "Over budget" : "Leftover"}</p>
+            <p className="">{isOverBudget ? "Over budget by:" : "Leftover:"}</p>
             <p className={getOverBudgetTextClass(spending, budget)}>
               {" "}
               {formatCurrency(Math.abs(leftover))}
@@ -237,7 +237,10 @@ const MonthBudgetHistory = () => {
       </main>
 
       {/* Month/Year Picker Footer */}
-      <div className="fixed bottom-23 left-0 right-0 bg-white border-t border-gray-200 p-4">
+      <div
+        className="fixed left-0 right-0 bg-white border-t border-gray-200 p-4"
+        style={{ bottom: "var(--bottom-nav-height, 66px)" }}
+      >
         <div className="flex justify-between gap-2 w-full">
           <button
             onClick={handlePreviousMonth}

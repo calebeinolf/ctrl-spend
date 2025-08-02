@@ -36,12 +36,12 @@ const AddTransactionHeader = ({
           </div>
         </div>
 
-        <div
+        {/* <div
           onClick={() => navigate("/home")}
           className="rounded-full bg-gray-100 p-4 aspect-square hover:bg-gray-200 cursor-pointer"
         >
           <Home size={24} />
-        </div>
+        </div> */}
       </div>
     </div>
   );
