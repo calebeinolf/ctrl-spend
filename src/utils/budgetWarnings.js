@@ -250,12 +250,12 @@ export const getBudgetAccentClass = (warningState) => {
 export const getBatteryWaveColor = (warningState) => {
   switch (warningState) {
     case WARNING_STATES.RED:
-      return "#b91c1c"; // red-700
+      return "#C10007"; // red-700
     case WARNING_STATES.YELLOW:
-      return "#fbbf24"; // amber-400
+      return "#FFB900"; // amber-400
     case WARNING_STATES.GREEN:
     default:
-      return "#16a34a"; // lime-600
+      return "#5EA500"; // lime-600
   }
 };
 
