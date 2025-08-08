@@ -116,6 +116,7 @@ const AddTransaction = () => {
       }
 
       result = Math.max(0, result); // Don't allow negative results
+      result = Math.round(result * 100) / 100; // Fix floating point precision issues
       const formattedResult = result.toString();
       setDisplayAmount(formattedResult);
       setAmount(formattedResult);
@@ -150,6 +151,7 @@ const AddTransaction = () => {
       }
 
       result = Math.max(0, result); // Don't allow negative results
+      result = Math.round(result * 100) / 100; // Fix floating point precision issues
       const formattedResult = result.toString();
       setDisplayAmount(formattedResult);
       setAmount(formattedResult);
