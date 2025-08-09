@@ -4,11 +4,10 @@ const LoadingScreen = () => {
   return (
     <div className="min-h-screen bg-white flex items-center justify-center">
       <div className="text-center">
-        {/* Smaller, faster loading logo */}
         <img
           src={Logo}
           alt="Ctrl+Spend"
-          className="mx-auto mb-4 w-60 h-60 opacity-80"
+          className="mx-auto mb-4 w-60 h-60 opacity-80 translate-y-[3px]"
         />
         {/* <div className="w-6 h-6 border-2 border-lime-600 border-t-transparent rounded-full animate-spin mx-auto"></div> */}
       </div>

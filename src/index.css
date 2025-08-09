@@ -3,6 +3,8 @@
 
 /* Material Design 3 Colors and Custom Classes */
 :root {
+  user-select: none;
+
   --md-primary: #1b5e20;
   --md-on-primary: #ffffff;
   --md-primary-container: #a5d6a7;
