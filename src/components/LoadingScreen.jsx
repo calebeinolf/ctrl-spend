@@ -7,15 +7,7 @@ const LoadingScreen = () => {
         <img
           src={Logo}
           alt="Ctrl+Spend"
-          className="mx-auto mb-4 w-60 h-60 opacity-80 translate-y-[8px] border-b-1"
-        />
-        {/* <div className="w-6 h-6 border-2 border-lime-600 border-t-transparent rounded-full animate-spin mx-auto"></div> */}
-      </div>
-      <div className="text-center">
-        <img
-          src={Logo}
-          alt="Ctrl+Spend"
-          className="mx-auto mb-4 w-60 h-60 opacity-80 translate-y-[12px] border-b-1"
+          className="mx-auto mb-4 w-60 h-60 opacity-80 translate-y-[10px] border-b-1 border-red-500"
         />
         {/* <div className="w-6 h-6 border-2 border-lime-600 border-t-transparent rounded-full animate-spin mx-auto"></div> */}
       </div>
