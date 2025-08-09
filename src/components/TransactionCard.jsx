@@ -25,11 +25,12 @@ const TransactionCard = ({ transaction, onClick, isMonthCard = false }) => {
   return (
     <div
       onClick={onClick}
-      className={`flex items-center justify-between p-4 px-6 text-lg rounded-full cursor-pointer hover:bg-gray-50 transition-colors ${
-        isMonthCard
-          ? getOverBudgetBackgroundClass(transaction.spent, transaction.budget)
-          : "bg-gray-100"
-      }`}
+      // className={`flex items-center justify-between p-4 px-6 text-lg rounded-full cursor-pointer hover:bg-gray-50 transition-colors ${
+      //   isMonthCard
+      //     ? getOverBudgetBackgroundClass(transaction.spent, transaction.budget)
+      //     : "bg-gray-100"
+      // }`}
+      className={`flex items-center justify-between p-4 px-6 text-lg rounded-full cursor-pointer hover:bg-gray-50 transition-colors bg-gray-100`}
     >
       <div className="flex-1">
         <div className="flex items-center gap-3">

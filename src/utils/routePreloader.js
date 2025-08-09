@@ -27,18 +27,18 @@ export const preloadRoute = (routeName) => {
 export const preloadCriticalRoutes = () => {
   // Phase 1: Load main navigation tabs immediately (but after initial render)
   setTimeout(() => {
-    if (import.meta.env.DEV) {
-      console.log("🚀 Loading main navigation tabs...");
-    }
+    // if (import.meta.env.DEV) {
+    //   console.log("🚀 Loading main navigation tabs...");
+    // }
     Promise.all([
       preloadRoute("current-budget"),
       preloadRoute("budget-history"),
       preloadRoute("settings"),
       preloadRoute("all-transactions"),
     ]).then(() => {
-      if (import.meta.env.DEV) {
-        console.log("✅ Main navigation tabs loaded and ready!");
-      }
+      // if (import.meta.env.DEV) {
+      //   console.log("✅ Main navigation tabs loaded and ready!");
+      // }
     });
   }, 100); // Very small delay to let initial page render first
 

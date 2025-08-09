@@ -10,6 +10,16 @@ const BudgetHistory = () => {
   const { transactions, getMonthSpending } = useAppData();
   const [monthlyData, setMonthlyData] = useState([]);
 
+  // Helper function to calculate total spending for a year
+  const getYearSpending = (year) => {
+    return transactions
+      .filter((transaction) => {
+        const date = transaction.date?.toDate();
+        return date && date.getFullYear() === year;
+      })
+      .reduce((total, transaction) => total + transaction.amount, 0);
+  };
+
   useEffect(() => {
     // Get unique months from transactions
     const monthsSet = new Set();
@@ -19,11 +29,11 @@ const BudgetHistory = () => {
       const date = transaction.date?.toDate();
       if (date) {
         const monthYear = `${date.getFullYear()}-${date.getMonth()}`;
-        // Only include past months, not current month
+        // Include all months including current month
         if (
           date.getFullYear() < now.getFullYear() ||
           (date.getFullYear() === now.getFullYear() &&
-            date.getMonth() < now.getMonth())
+            date.getMonth() <= now.getMonth())
         ) {
           monthsSet.add(monthYear);
         }
@@ -61,7 +71,25 @@ const BudgetHistory = () => {
         return b.month - a.month;
       });
 
-    setMonthlyData(monthsArray);
+    // Group by year and calculate year totals
+    const groupedByYear = monthsArray.reduce((acc, monthData) => {
+      if (!acc[monthData.year]) {
+        acc[monthData.year] = {
+          year: monthData.year,
+          totalSpending: getYearSpending(monthData.year),
+          months: [],
+        };
+      }
+      acc[monthData.year].months.push(monthData);
+      return acc;
+    }, {});
+
+    // Convert to array and sort years (most recent first)
+    const yearlyData = Object.values(groupedByYear).sort(
+      (a, b) => b.year - a.year
+    );
+
+    setMonthlyData(yearlyData);
   }, [transactions, getMonthSpending]);
 
   return (
@@ -82,24 +110,41 @@ const BudgetHistory = () => {
             <ChevronRight />
           </div>
           <h3 className="text-2xl font-medium text-gray-900 text-center py-6">
-            Past Months
+            Monthly Spending
           </h3>
           {monthlyData.length > 0 ? (
-            <div className="space-y-3">
-              {monthlyData.map((data) => (
-                <TransactionCard
-                  key={`${data.year}-${data.month}`}
-                  isMonthCard={true}
-                  transaction={{
-                    date: data.date,
-                    spent: data.spending,
-                    budget: data.budget,
-                    isOverBudget: data.isOverBudget,
-                  }}
-                  onClick={() =>
-                    navigate(`/history/${data.year}/${data.month}`)
-                  }
-                />
+            <div className="space-y-6">
+              {monthlyData.map((yearData) => (
+                <div key={yearData.year} className="space-y-3">
+                  {/* Year Header */}
+                  <div className="flex items-center justify-between px-4 py-2">
+                    <h4 className="text-lg font-semibold text-gray-800">
+                      {yearData.year}
+                    </h4>
+                    <span className="text-lg font-medium text-gray-400">
+                      Total: {formatCurrency(yearData.totalSpending)}
+                    </span>
+                  </div>
+
+                  {/* Month Cards for this year */}
+                  <div className="space-y-3">
+                    {yearData.months.map((data) => (
+                      <TransactionCard
+                        key={`${data.year}-${data.month}`}
+                        isMonthCard={true}
+                        transaction={{
+                          date: data.date,
+                          spent: data.spending,
+                          budget: data.budget,
+                          isOverBudget: data.isOverBudget,
+                        }}
+                        onClick={() =>
+                          navigate(`/history/${data.year}/${data.month}`)
+                        }
+                      />
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           ) : (
