@@ -28,7 +28,7 @@ export const useAppData = () => {
 };
 
 export const AppDataProvider = ({ children }) => {
-  const { user } = useAuth();
+  const { user, initializing } = useAuth();
   const [transactions, setTransactions] = useState([]);
   const [settings, setSettings] = useState({
     budget: { amount: 500, frequency: "monthly" },
@@ -51,67 +51,40 @@ export const AppDataProvider = ({ children }) => {
     { id: "entertainment", name: "Entertainment", color: "#f59e0b" },
     { id: "bills", name: "Bills", color: "#10b981" },
   ];
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Start as not loading for better UX
+  const [settingsLoaded, setSettingsLoaded] = useState(false);
 
-  // Initialize user settings
+  // Optimized settings initialization - batch read and minimal writes
   const initializeUserSettings = async (userId) => {
     try {
-      const budgetDoc = await getDoc(
-        doc(db, `users/${userId}/settings`, "budget")
-      );
-      const warningDoc = await getDoc(
-        doc(db, `users/${userId}/settings`, "warning")
-      );
-      const typesDoc = await getDoc(
-        doc(db, `users/${userId}/settings`, "transactionTypes")
-      );
+      // Batch read all settings at once
+      const [budgetDoc, warningDoc, typesDoc] = await Promise.all([
+        getDoc(doc(db, `users/${userId}/settings`, "budget")),
+        getDoc(doc(db, `users/${userId}/settings`, "warning")),
+        getDoc(doc(db, `users/${userId}/settings`, "transactionTypes")),
+      ]);
 
-      if (!budgetDoc.exists()) {
-        await setDoc(
-          doc(db, `users/${userId}/settings`, "budget"),
-          settings.budget
-        );
-      }
-
-      if (!warningDoc.exists()) {
-        await setDoc(
-          doc(db, `users/${userId}/settings`, "warning"),
-          settings.warning
-        );
-      }
-
-      if (!typesDoc.exists()) {
-        await setDoc(doc(db, `users/${userId}/settings`, "transactionTypes"), {
-          types: defaultTransactionTypes,
-        });
-      }
-    } catch (error) {
-      console.error("Error initializing user settings:", error);
-    }
-  };
-
-  // Load settings
-  const loadSettings = async (userId) => {
-    try {
-      const budgetDoc = await getDoc(
-        doc(db, `users/${userId}/settings`, "budget")
-      );
-      const warningDoc = await getDoc(
-        doc(db, `users/${userId}/settings`, "warning")
-      );
-      const typesDoc = await getDoc(
-        doc(db, `users/${userId}/settings`, "transactionTypes")
-      );
-
+      const writes = [];
       const newSettings = { ...settings };
 
-      if (budgetDoc.exists()) {
+      // Only write missing documents
+      if (!budgetDoc.exists()) {
+        writes.push(
+          setDoc(doc(db, `users/${userId}/settings`, "budget"), settings.budget)
+        );
+      } else {
         newSettings.budget = budgetDoc.data();
       }
 
-      if (warningDoc.exists()) {
+      if (!warningDoc.exists()) {
+        writes.push(
+          setDoc(
+            doc(db, `users/${userId}/settings`, "warning"),
+            settings.warning
+          )
+        );
+      } else {
         const warningData = warningDoc.data();
-        // Validate and set defaults for warning settings to prevent NaN values
         newSettings.warning = {
           yellowType: warningData.yellowType || "percentage",
           yellowValue: isNaN(Number(warningData.yellowValue))
@@ -124,13 +97,28 @@ export const AppDataProvider = ({ children }) => {
         };
       }
 
-      if (typesDoc.exists()) {
+      if (!typesDoc.exists()) {
+        writes.push(
+          setDoc(doc(db, `users/${userId}/settings`, "transactionTypes"), {
+            types: defaultTransactionTypes,
+          })
+        );
+        newSettings.transactionTypes = { types: defaultTransactionTypes };
+      } else {
         newSettings.transactionTypes = typesDoc.data();
       }
 
+      // Update settings immediately with available data
       setSettings(newSettings);
+      setSettingsLoaded(true);
+
+      // Execute any needed writes in parallel
+      if (writes.length > 0) {
+        await Promise.all(writes);
+      }
     } catch (error) {
-      console.error("Error loading settings:", error);
+      console.error("Error initializing user settings:", error);
+      setSettingsLoaded(true); // Still mark as loaded to prevent blocking
     }
   };
 
@@ -335,12 +323,16 @@ export const AppDataProvider = ({ children }) => {
       : settings.budget.amount;
   };
 
-  // Effect to handle user changes
+  // Effect to handle user changes - optimized Firebase listeners
   useEffect(() => {
-    if (user) {
+    if (user && !initializing) {
+      // Initialize settings asynchronously in background - non-blocking
       initializeUserSettings(user.uid);
 
-      // Listen to transactions
+      // App is immediately usable with default settings
+      // No loading state blocking the UI
+
+      // Listen to transactions - most critical data
       const transactionsUnsubscribe = onSnapshot(
         query(
           collection(db, `users/${user.uid}/transactions`),
@@ -368,19 +360,16 @@ export const AppDataProvider = ({ children }) => {
         }
       );
 
-      // Listen to settings changes
+      // Settings listeners - lower priority, non-blocking
       const budgetUnsubscribe = onSnapshot(
         doc(db, `users/${user.uid}/settings`, "budget"),
         (doc) => {
           if (doc.exists()) {
             setSettings((prev) => ({ ...prev, budget: doc.data() }));
           }
-          // Set loading to false after first budget load
-          setLoading(false);
         },
         (error) => {
           console.error("Error listening to budget settings:", error);
-          setLoading(false);
         }
       );
 
@@ -414,16 +403,21 @@ export const AppDataProvider = ({ children }) => {
         warningUnsubscribe();
         typesUnsubscribe();
       };
-    } else {
+    } else if (!user && !initializing) {
       setTransactions([]);
       setSettings({
         budget: { amount: 500, frequency: "monthly" },
-        warning: { type: "percentage", value: 20 },
+        warning: {
+          yellowType: "percentage",
+          yellowValue: 40,
+          redType: "percentage",
+          redValue: 20,
+        },
         transactionTypes: { types: [] },
       });
-      setLoading(false);
+      // Remove loading state entirely for logged out users
     }
-  }, [user]);
+  }, [user, initializing]);
 
   const value = {
     transactions,

@@ -13,13 +13,22 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // Start with cached auth state if available
+  const [user, setUser] = useState(auth.currentUser);
+  const [loading, setLoading] = useState(!auth.currentUser);
+  const [initializing, setInitializing] = useState(!auth.currentUser);
 
   useEffect(() => {
+    // If we already have a cached user, skip loading state
+    if (auth.currentUser) {
+      setLoading(false);
+      setInitializing(false);
+    }
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setLoading(false);
+      setInitializing(false);
     });
 
     return unsubscribe;
@@ -28,6 +37,7 @@ export const AuthProvider = ({ children }) => {
   const value = {
     user,
     loading,
+    initializing,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

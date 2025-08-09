@@ -69,16 +69,17 @@ const Home = () => {
   const showWarning = shouldShowWarning();
   const warningState = getCurrentBudgetWarningState();
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="mx-auto mb-4 w-12 h-12 md-spinner"></div>
-          <p className="text-gray-600">Loading...</p>
-        </div>
-      </div>
-    );
-  }
+  // Remove blocking loading state - Home page works fine with default data
+  // if (loading) {
+  //   return (
+  //     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+  //       <div className="text-center">
+  //         <div className="mx-auto mb-4 w-12 h-12 md-spinner"></div>
+  //         <p className="text-gray-600">Loading...</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="min-h-screen bg-white pb-20">

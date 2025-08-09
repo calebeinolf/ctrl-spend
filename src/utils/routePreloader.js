@@ -1,24 +1,51 @@
-// Preload critical routes for better user experience
+// Progressive loading of main app tabs
 export const preloadRoute = (routeName) => {
   switch (routeName) {
-    case "home":
-      return import("../pages/Home");
-    case "add-transaction":
-      return import("../pages/AddTransaction");
+    // Main navigation tabs
     case "current-budget":
       return import("../pages/CurrentBudget");
+    case "budget-history":
+      return import("../pages/BudgetHistory");
     case "settings":
       return import("../pages/Settings");
+    case "all-transactions":
+      return import("../pages/AllTransactions");
+
+    // Secondary pages
+    case "transaction-details":
+      return import("../pages/TransactionDetails");
+    case "month-budget-history":
+      return import("../pages/MonthBudgetHistory");
+    case "transaction-types":
+      return import("../pages/TransactionTypes");
     default:
       return null;
   }
 };
 
-// Preload critical routes after initial load
+// Progressive loading strategy: load main tabs after initial page renders
 export const preloadCriticalRoutes = () => {
-  // Preload most commonly used routes
+  // Phase 1: Load main navigation tabs immediately (but after initial render)
   setTimeout(() => {
-    preloadRoute("add-transaction");
-    preloadRoute("current-budget");
-  }, 1000);
+    if (import.meta.env.DEV) {
+      console.log("🚀 Loading main navigation tabs...");
+    }
+    Promise.all([
+      preloadRoute("current-budget"),
+      preloadRoute("budget-history"),
+      preloadRoute("settings"),
+      preloadRoute("all-transactions"),
+    ]).then(() => {
+      if (import.meta.env.DEV) {
+        console.log("✅ Main navigation tabs loaded and ready!");
+      }
+    });
+  }, 100); // Very small delay to let initial page render first
+
+  // Phase 2: Load secondary pages after main tabs
+  setTimeout(() => {
+    preloadRoute("transaction-details");
+    preloadRoute("month-budget-history");
+    preloadRoute("transaction-types");
+  }, 1000); // Load these after main tabs
 };
