@@ -41,7 +41,7 @@ const ColorPickerModal = ({
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-2xl p-6 w-full max-w-sm">
+      <div className="bg-white rounded-4xl p-6 w-full max-w-sm">
         <h3
           className="text-xl font-semibold text-gray-900 mb-6"
           style={{ color: selectedColor }}
@@ -58,7 +58,7 @@ const ColorPickerModal = ({
               type="text"
               value={selectedName}
               onChange={(e) => setSelectedName(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-lime-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:border-transparent"
               placeholder="Enter type name"
             />
           </div>
@@ -87,14 +87,14 @@ const ColorPickerModal = ({
         <div className="flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 px-4 py-3 text-gray-700 border border-gray-300 rounded-xl font-medium hover:bg-gray-50 transition-colors"
+            className="flex-1 px-4 py-3 text-gray-700 border border-gray-300 rounded-full font-medium hover:bg-gray-50 transition-colors"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
             disabled={!selectedName.trim()}
-            className="flex-1 px-4 py-3 text-white rounded-xl font-medium transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+            className="flex-1 px-4 py-3 text-white rounded-full font-medium transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
             style={{
               backgroundColor: selectedName.trim() ? selectedColor : undefined,
             }}

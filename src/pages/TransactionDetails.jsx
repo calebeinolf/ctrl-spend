@@ -274,14 +274,14 @@ const TransactionDetails = () => {
               value={date}
               onChange={(e) => setDate(e.target.value)}
               onBlur={(e) => handleSaveDate(e.target.value)}
-              className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-lime-500 focus:border-transparent"
+              className="px-4 py-3 border border-gray-300 rounded-xl focus:border-transparent"
             />
             <input
               type="time"
               value={time}
               onChange={(e) => setTime(e.target.value)}
               onBlur={(e) => handleSaveTime(e.target.value)}
-              className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-lime-500 focus:border-transparent"
+              className="px-4 py-3 border border-gray-300 rounded-xl focus:border-transparent"
             />
           </div>
         </div>
