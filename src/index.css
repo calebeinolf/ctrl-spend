@@ -31,7 +31,7 @@
   --md-accent-variant: #388e3c;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --md-primary: #7cd977;
     --md-on-primary: #003909;
@@ -56,7 +56,7 @@
     --md-outline: #8c9389;
     --md-outline-variant: #424940;
   }
-}
+} */
 
 body {
   font-family: "Inter", system-ui, -apple-system, sans-serif;

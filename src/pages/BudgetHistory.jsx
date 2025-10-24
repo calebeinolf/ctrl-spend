@@ -29,14 +29,7 @@ const BudgetHistory = () => {
       const date = transaction.date?.toDate();
       if (date) {
         const monthYear = `${date.getFullYear()}-${date.getMonth()}`;
-        // Include all months including current month
-        if (
-          date.getFullYear() < now.getFullYear() ||
-          (date.getFullYear() === now.getFullYear() &&
-            date.getMonth() <= now.getMonth())
-        ) {
-          monthsSet.add(monthYear);
-        }
+        monthsSet.add(monthYear);
       }
     });
 
