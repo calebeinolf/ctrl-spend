@@ -85,7 +85,7 @@ const Home = () => {
     <div className="min-h-screen bg-white pb-20">
       {/* Header */}
       <h1 className="pt-[8vh] text-3xl font-medium text-gray-900 text-center">
-        Welcome
+        Welcome!
         {/* Logo */}
         <div className="flex justify-center mt-6">
           <img
