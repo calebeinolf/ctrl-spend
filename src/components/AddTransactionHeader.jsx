@@ -19,12 +19,12 @@ const AddTransactionHeader = ({
   const navigate = useNavigate();
 
   return (
-    <div className="p-6 bg-white">
+    <div className="p-6 bg-white w-full max-w-md mx-auto">
       <div className="flex items-center justify-center gap-4">
         <div
           onClick={() => navigate("/current-budget")}
           className={`flex-1 flex items-center justify-between gap-2 rounded-full px-6 h-14 cursor-pointer ${getBudgetBackgroundClass(
-            warningState
+            warningState,
           )} ${getBudgetTextDarkClass(warningState)} text-left`}
         >
           <div className="font-medium">Budget Left</div>

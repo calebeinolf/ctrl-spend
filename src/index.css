@@ -59,7 +59,11 @@
 } */
 
 body {
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
   background-color: var(--md-background);
   color: var(--md-on-background);
   margin: 0;
@@ -102,7 +106,9 @@ button {
 }
 
 .md-btn-filled:hover {
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
   filter: brightness(1.1);
 }
 
@@ -344,7 +350,7 @@ html {
 /* Prevent horizontal scroll on mobile */
 html,
 body {
-  overflow-x: hidden;
+  overflow-x: clip;
   width: 100%;
 }
 

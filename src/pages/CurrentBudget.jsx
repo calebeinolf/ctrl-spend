@@ -51,7 +51,7 @@ const CurrentBudget = () => {
 
   const getProgressPercentage = () => {
     return parseFloat(
-      ((currentSpending / settings.budget.amount) * 100).toFixed(0)
+      ((currentSpending / settings.budget.amount) * 100).toFixed(0),
     );
   };
 
@@ -59,7 +59,7 @@ const CurrentBudget = () => {
     <div className="min-h-screen bg-white pb-20">
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-6 py-4 z-40">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between max-w-md mx-auto">
           <h1 className="select-none text-xl font-semibold text-gray-900">
             {currentMonth}
           </h1>
@@ -71,7 +71,7 @@ const CurrentBudget = () => {
 
       {/* Main Content */}
       <main className="px-4 py-6 pt-20">
-        <div className="space-y-6">
+        <div className="space-y-6 max-w-md mx-auto">
           {/* Progress Bar */}
           <div className="flex justify-center mt-20">
             <div className="w-1/2 rounded-full h-2 bg-gray-200">
@@ -85,7 +85,7 @@ const CurrentBudget = () => {
           <div className="text-center mt-8">
             <h1
               className={`text-5xl font-medium mb-2 ${getBudgetTextDarkClass(
-                warningState
+                warningState,
               )}`}
             >
               {budgetLeft >= 0
@@ -99,7 +99,7 @@ const CurrentBudget = () => {
           {/* Total spent */}
           <div
             className={`mt-12 mb-4 font-medium flex items-center justify-between p-4 px-6 text-xl rounded-full cursor-pointer hover:opacity-80 transition-all ${getBudgetBackgroundClass(
-              warningState
+              warningState,
             )} `}
           >
             <p className={getBudgetTextDarkClass(warningState)}>Total spent</p>
@@ -128,7 +128,7 @@ const CurrentBudget = () => {
                       ...transaction,
                       date: transaction.date?.toDate() || new Date(),
                       color: settings?.transactionTypes?.types?.find(
-                        (type) => type.id === transaction.categoryId
+                        (type) => type.id === transaction.categoryId,
                       )?.color,
                     }}
                     onClick={() => navigate(`/transaction/${transaction.id}`)}

@@ -336,7 +336,7 @@ const AddTransaction = () => {
 
         {/* Back Button - Only shown in step 2 */}
         {step === 2 && (
-          <div className="px-6 pb-4 bg-white">
+          <div className="px-6 pb-4 bg-white max-w-md mx-auto w-full">
             <button
               onClick={() => setStep(1)}
               className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors"
@@ -350,7 +350,7 @@ const AddTransaction = () => {
         <div
           className={`${
             step === 2 ? "bg-white pb-6" : "flex-1"
-          } flex flex-col justify-end items-end p-4`}
+          } flex flex-col justify-end items-end p-4 max-w-md mx-auto w-full`}
         >
           {fullEquation && (
             <div className="text-xl font-medium text-gray-400 mb-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
@@ -477,7 +477,7 @@ const AddTransaction = () => {
 
       {/* Step 2: Category Selection */}
       {step === 2 && (
-        <div className="overflow-y-auto mt-[40vh]">
+        <div className="overflow-y-auto mt-[40vh] max-w-md mx-auto w-full">
           <div className="text-2xl text-center text-gray-600 font-medium mt-2 mb-6">
             What's it for?
           </div>
@@ -557,7 +557,7 @@ const AddTransaction = () => {
       {/* Bottom Action Buttons */}
       {step === 2 && (
         <div
-          className="fixed flex items-center gap-3 left-0 right-0 p-4 z-20 font-medium"
+          className="fixed flex items-center gap-3 left-0 right-0 p-4 z-20 font-medium max-w-md mx-auto w-full"
           style={{ bottom: "var(--bottom-nav-height, 66px)" }}
         >
           <button

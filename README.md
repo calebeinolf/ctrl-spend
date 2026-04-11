@@ -52,3 +52,7 @@ Tech:
   <img width="206" height="457.5" alt="image" src="https://github.com/user-attachments/assets/9fd777a6-2e3a-4240-88e5-9275050063f3" />
 </kbd>
 
+
+deploy:
+npm run build
+firebase deploy

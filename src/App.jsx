@@ -64,13 +64,11 @@ const AppContent = () => {
   return (
     <div className="min-h-screen bg-white relative">
       {/* Loading Screen with fade out transition */}
-      <div
-        className={`absolute inset-0 z-50 transition-opacity duration-200 ease-out ${
-          loading ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
-        <LoadingScreen />
-      </div>
+      {loading && (
+        <div className="absolute inset-0 z-50">
+          <LoadingScreen />
+        </div>
+      )}
 
       {/* Main App Content */}
       <div

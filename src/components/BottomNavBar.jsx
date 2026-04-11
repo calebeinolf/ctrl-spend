@@ -20,7 +20,7 @@ const BottomNavBar = () => {
       const height = navRef.current.offsetHeight;
       document.documentElement.style.setProperty(
         "--bottom-nav-height",
-        `${height}px`
+        `${height}px`,
       );
     }
   }, []);
@@ -30,7 +30,7 @@ const BottomNavBar = () => {
       ref={navRef}
       className="fixed bottom-0 left-0 right-0 bg-[#F4F7EE] px-2 z-20 safe-area-pb"
     >
-      <div className="flex justify-between items-center gap-4 mb-4">
+      <div className="flex justify-between items-center gap-4 mb-4 max-w-md mx-auto">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = location.pathname === item.path;
